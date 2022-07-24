@@ -1,9 +1,12 @@
 package com.mc.englishlearn.audioplayer;
 
 import android.annotation.SuppressLint;
+
 import android.content.Intent;
 import android.database.Cursor;
+
 import android.media.AudioAttributes;
+
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,6 +37,8 @@ public class PlayerActivity extends AppCompatActivity {
      ScheduledExecutorService timer;
      public static final int PICK_FILE =99;
      boolean isRepeat = false;
+
+
 
     @Override
     protected void onCreate (Bundle savedInstanceState){
@@ -148,6 +153,7 @@ public class PlayerActivity extends AppCompatActivity {
         }
     }
 
+
     //Creating audio player
     public void createMediaPlayer(Uri uri){
         mediaPlayer = new MediaPlayer();
@@ -200,6 +206,8 @@ public class PlayerActivity extends AppCompatActivity {
         }
         return fileName;
     }
+
+
 
     @Override
     protected void onDestroy() {

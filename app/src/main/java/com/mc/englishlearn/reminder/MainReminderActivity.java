@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mc.englishlearn.R;
 
 
@@ -18,8 +17,9 @@ import java.util.ArrayList;
 
 public class MainReminderActivity extends AppCompatActivity {
 
-    FloatingActionButton addReminder;
-    Button deleteReminder;
+    Button addReminder;
+    //Button addReminder;
+    //Button deleteReminder;
     RecyclerView listReminder;
     ArrayList <Model> dataHold = new ArrayList<Model>();//Array list do dodawania przypomnień i wyświetlania w recycleview
     Adapter adapter;
@@ -29,10 +29,10 @@ public class MainReminderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminder_main);
 
-        addReminder = (FloatingActionButton) findViewById(R.id.addReminder); //Floating action button to change activity
+        addReminder = (Button) findViewById(R.id.addReminder); //Przycisk u dołu do zmiany aktywności
         listReminder = (RecyclerView) findViewById(R.id.list);
         listReminder.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        deleteReminder = (Button) findViewById(R.id.deleteReminder);
+        //deleteReminder = (Button) findViewById(R.id.deleteReminder);
 
         addReminder.setOnClickListener(new View.OnClickListener() {
             @Override
