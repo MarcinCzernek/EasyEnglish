@@ -10,24 +10,23 @@ import android.widget.Button;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.mc.englishlearn.audioplayer.MyService;
-import com.mc.englishlearn.audioplayer.PlayerActivity;
-import com.mc.englishlearn.recording.RecordLaunchActivity;
-import com.mc.englishlearn.reminder.MainReminderActivity;
+import com.mc.englishlearn.nagrywanie.NagrywarkaMainActivity;
+import com.mc.englishlearn.odtwarzacz.OdtwarzaczActivity;
+import com.mc.englishlearn.przypomnienia.PrzypomnienieMenuActivity;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MenuActivity extends AppCompatActivity {
 
-    Button exit;
+    Button wyjsciePrzycisk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.menu_aktywnosc);
 
-        exit = findViewById(R.id.exit);
+        wyjsciePrzycisk = findViewById(R.id.wyjscie);
 
-        exit.setOnClickListener(new View.OnClickListener() {
+        wyjsciePrzycisk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent homeIntent = new Intent(Intent.ACTION_MAIN);
@@ -41,22 +40,22 @@ public class MainActivity extends AppCompatActivity {
     //Odtwarzacz
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void createNewIntentPlayer (View view){
-        Intent i = new Intent(this, PlayerActivity.class);
+        Intent i = new Intent(this, OdtwarzaczActivity.class);
         startActivity(i);
         Context context = getApplicationContext();
-        Intent intent = new Intent(this, MyService.class); // Build the intent for the service
+        Intent intent = new Intent(this, OdtwarzaczActivity.class); // Zbudowanie intencji dla usługi
         context.startForegroundService(intent);
     }
 
     //Kalendarz
     public void createNewIntentReminder (View view){
-        Intent i = new Intent(this, MainReminderActivity.class);
+        Intent i = new Intent(this, PrzypomnienieMenuActivity.class);
         startActivity(i);
     }
 
-    //Rekorder
+    //Nagrywarka
     public void createNewIntentRecorder (View view){
-        Intent i = new Intent(this, RecordLaunchActivity.class);
+        Intent i = new Intent(this, NagrywarkaMainActivity.class);
         startActivity(i);
     }
 }

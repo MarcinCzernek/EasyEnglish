@@ -3,10 +3,11 @@
 
     package="com.mc.englishlearn">
 
-    <!--Permission for recording audio and storage of audio in users device-->
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <!--Zezwolenie na nagrywanie dźwięku i przechowywanie dźwięku w urządzeniu użytkownika-->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -16,22 +17,22 @@
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".reminder.splashActivity"/>
-        <activity android:name="com.mc.englishlearn.recording.RecordLaunchActivity"
-            android:parentActivityName=".MainActivity"
+        <activity android:name=".przypomnienia.EkranSplashActivity"/>
+        <activity android:name="com.mc.englishlearn.nagrywanie.NagrywarkaMainActivity"
+            android:parentActivityName=".MenuActivity"
             android:exported="true"/>
         <activity
-            android:name=".reminder.MainReminderActivity"
-            android:parentActivityName=".MainActivity"
+            android:name=".przypomnienia.PrzypomnienieMenuActivity"
+            android:parentActivityName=".MenuActivity"
             android:exported="true" />
-        <activity android:name=".audioplayer.PlayerActivity"
-            android:parentActivityName=".MainActivity"
+        <activity android:name=".odtwarzacz.OdtwarzaczActivity"
+            android:parentActivityName=".MenuActivity"
             android:exported="true"/>
-        <activity android:name=".reminder.Reminder"
-            android:parentActivityName=".reminder.MainReminderActivity"
+        <activity android:name=".przypomnienia.Przypomnienie"
+            android:parentActivityName=".przypomnienia.PrzypomnienieMenuActivity"
             android:exported="true"/>
         <activity
-            android:name=".MainActivity"
+            android:name=".MenuActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,7 +41,13 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".reminder.Alarm" />
+        <service
+            android:name=".nagrywanie.SerwisNagrywarki"
+            android:enabled="true"
+            android:foregroundServiceType="mediaProjection"
+            android:exported="true"/>
+
+        <receiver android:name=".przypomnienia.Alarm" />
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.mc.englishlearn.reminder;
+package com.mc.englishlearn.przypomnienia;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,19 +8,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.mc.englishlearn.R;
 
-public class splashActivity extends AppCompatActivity {
+public class EkranSplashActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+        setContentView(R.layout.ekran_splash);
 
-        int secondsDelayed = 1;
+        int sekundyOpoznione = 1;
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                startActivity(new Intent(getApplicationContext(), MainReminderActivity.class));             //after 500 milliseconds this block calls the mainActivity
+                startActivity(new Intent(getApplicationContext(), PrzypomnienieMenuActivity.class));             //po 500 milisekundach ten blok wywołuje przypomnienieMainActivity
                 finish();
             }
-        }, secondsDelayed * 500);
+        }, sekundyOpoznione * 500);
     }
 }

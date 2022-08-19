@@ -4,13 +4,13 @@
     android:layout_height="wrap_content">
 
     <RelativeLayout
-        android:id="@+id/layout"
+        android:id="@+id/uklad"
         android:layout_width="fill_parent"
         android:layout_height="64dp"
         android:padding="10dp">
 
         <Button
-            android:id="@+id/flashButton"
+            android:id="@+id/flashPrzycisk"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_alignParentRight="true"
@@ -18,7 +18,7 @@
             android:text="Odstaw przypomnienie" />
 
         <ImageView
-            android:id="@+id/icon"
+            android:id="@+id/ikonka"
             android:layout_width="60dp"
             android:layout_height="45dp"
             android:layout_alignParentLeft="true"
@@ -31,10 +31,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/icon">
+            android:layout_toRightOf="@+id/ikonka">
 
             <TextView
-                android:id="@+id/message"
+                android:id="@+id/wiadomosc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -43,10 +43,10 @@
                 android:textSize="13sp" />
 
             <TextView
-                android:id="@+id/date"
+                android:id="@+id/data"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/message"
+                android:layout_below="@+id/wiadomosc"
                 android:layout_alignParentLeft="true"
                 android:layout_marginTop="3dp"
                 android:text="90% Laduje"

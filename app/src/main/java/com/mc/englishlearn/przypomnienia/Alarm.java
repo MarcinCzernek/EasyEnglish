@@ -1,4 +1,4 @@
-package com.mc.englishlearn.reminder;
+package com.mc.englishlearn.przypomnienia;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -20,25 +20,27 @@ public class Alarm extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Bundle bundle = intent.getExtras();
-        String text = bundle.getString("event");
-        String date = bundle.getString("date") + " " + bundle.getString("time");
-        //Click on Notification
-        Intent intent1 = new Intent(context, NotificationMessage.class);
+        Bundle pakiet = intent.getExtras();
+        String tekst = pakiet.getString("wydarzenie");
+        String data = pakiet.getString("data") + " " + pakiet.getString("czas");
+
+        //Kliknięcie na powiadomienie
+        Intent intent1 = new Intent(context, WiadomoscPowiadamiajaca.class);
         intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent1.putExtra("message", text);
-        //Notification Builder
+        intent1.putExtra("wiadomość", tekst);
+
+        //Konstruktor powiadomień
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 1, intent1, PendingIntent.FLAG_ONE_SHOT);
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, "notify_001");
 
         //tutaj ustawiam wszystkie właściwości powiadomienia
-        RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.notification_layout);
+        RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.przypomnienie_powiadomienie_uklad);
         contentView.setImageViewResource(R.id.image, R.mipmap.ic_launcher);
         PendingIntent pendingSwitchIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-        contentView.setOnClickPendingIntent(R.id.flashButton, pendingSwitchIntent);
-        contentView.setTextViewText(R.id.message, text);
-        contentView.setTextViewText(R.id.date, date);
+        contentView.setOnClickPendingIntent(R.id.flashPrzycisk, pendingSwitchIntent);
+        contentView.setTextViewText(R.id.wiadomosc, tekst);
+        contentView.setTextViewText(R.id.data, data);
         mBuilder.setSmallIcon(R.drawable.alarm);
         mBuilder.setAutoCancel(true);
         mBuilder.setOngoing(true);
@@ -48,10 +50,11 @@ public class Alarm extends BroadcastReceiver {
         mBuilder.build().flags = Notification.FLAG_NO_CLEAR | Notification.PRIORITY_HIGH;
         mBuilder.setContent(contentView);
         mBuilder.setContentIntent(pendingIntent);
+
         //tworzę kanał powiadomień po poziomie API 26
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             String channelId = "channel_id";
-            NotificationChannel channel = new NotificationChannel(channelId, "channel name", NotificationManager.IMPORTANCE_HIGH);
+            NotificationChannel channel = new NotificationChannel(channelId, "nazwa kanału", NotificationManager.IMPORTANCE_HIGH);
             channel.enableVibration(true);
             notificationManager.createNotificationChannel(channel);
             mBuilder.setChannelId(channelId);

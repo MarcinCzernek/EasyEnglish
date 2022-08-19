@@ -6,10 +6,10 @@
     android:layout_height="match_parent"
     android:background="#00B0FF"
     android:padding="10dp"
-    tools:context=".MainActivity">
+    tools:context=".MenuActivity">
 
     <TextView
-        android:id="@+id/remindertitle"
+        android:id="@+id/tytulPrzypomnienia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="FISZKI"
@@ -18,19 +18,19 @@
         android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list"
+        android:id="@+id/lista"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/addReminder"
-        android:layout_below="@id/remindertitle" />
+        android:layout_above="@id/dodajPrzypomnienie"
+        android:layout_below="@id/tytulPrzypomnienia" />
 
     <Button
-        android:id="@+id/addReminder"
+        android:id="@+id/dodajPrzypomnienie"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:backgroundTint="@color/white"
         android:text="Dodaj nowe przypomnienie"
+        android:backgroundTint="@color/white"
         android:textColor="#00B0FF" />
 
 
