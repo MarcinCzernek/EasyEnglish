@@ -20,9 +20,12 @@ public class Alarm extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
         Bundle pakiet = intent.getExtras();
-        String tekst = pakiet.getString("wydarzenie");
+
         String data = pakiet.getString("data") + " " + pakiet.getString("czas");
+
+        String tekst = pakiet.getString("wydarzenie");
 
         //Kliknięcie na powiadomienie
         Intent intent1 = new Intent(context, WiadomoscPowiadamiajaca.class);
@@ -34,13 +37,14 @@ public class Alarm extends BroadcastReceiver {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, "notify_001");
 
-        //tutaj ustawiam wszystkie właściwości powiadomienia
+        //ustawienia wszystkie właściwości powiadomienia
         RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.przypomnienie_powiadomienie_uklad);
         contentView.setImageViewResource(R.id.image, R.mipmap.ic_launcher);
         PendingIntent pendingSwitchIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-        contentView.setOnClickPendingIntent(R.id.flashPrzycisk, pendingSwitchIntent);
+        contentView.setOnClickPendingIntent(R.id.flashPrzycisk, pendingSwitchIntent);// TODO
         contentView.setTextViewText(R.id.wiadomosc, tekst);
         contentView.setTextViewText(R.id.data, data);
+
         mBuilder.setSmallIcon(R.drawable.alarm);
         mBuilder.setAutoCancel(true);
         mBuilder.setOngoing(true);
@@ -51,16 +55,16 @@ public class Alarm extends BroadcastReceiver {
         mBuilder.setContent(contentView);
         mBuilder.setContentIntent(pendingIntent);
 
-        //tworzę kanał powiadomień po poziomie API 26
+        //tworzę kanał powiadomień
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String channelId = "channel_id";
+            String channelId = "idKanału";
             NotificationChannel channel = new NotificationChannel(channelId, "nazwa kanału", NotificationManager.IMPORTANCE_HIGH);
             channel.enableVibration(true);
             notificationManager.createNotificationChannel(channel);
             mBuilder.setChannelId(channelId);
         }
-        Notification notification = mBuilder.build();
-        notificationManager.notify(1, notification);
+        Notification powiadomienie = mBuilder.build();
+        notificationManager.notify(1, powiadomienie);
 
     }
 }

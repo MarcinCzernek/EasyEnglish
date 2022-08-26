@@ -1,15 +1,20 @@
 package com.mc.englishlearn.przypomnienia;
 
-//Klasa Model jest używana do ustawiania i pobierania danych z bazy danych
+//Klasa Kartka jest używana do ustawiania i pobierania danych z bazy danych
 
-public class Model {
+public class Kartka {
+
+    //Klasa będąca modelem kartki z przypomnieniami
+
 
     String tytul, data, czas;
 
-    public Model() {
+
+    public Kartka() {
     }
 
-    public Model(String tytul, String data, String czas) {
+    public Kartka(String tytul, String data, String czas) {
+
         this.tytul = tytul;
         this.data = data;
         this.czas = czas;

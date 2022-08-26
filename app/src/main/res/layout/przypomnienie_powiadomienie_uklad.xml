@@ -15,7 +15,7 @@
             android:layout_height="50dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="Odstaw przypomnienie" />
+            android:text="Odstaw" />
 
         <ImageView
             android:id="@+id/ikonka"

@@ -17,45 +17,66 @@ import java.util.ArrayList;
 
 public class PrzypomnienieMenuActivity extends AppCompatActivity {
 
-    Button dodajPrzypomnieniePrzycisk;
-    //Button addReminder;
-    //Button deleteReminder;
-    RecyclerView listaPrzypomnień;
-    ArrayList <Model> zbiórDanych = new ArrayList<Model>();//Array list do dodawania przypomnień i wyświetlania w recycleview
+    RecyclerView listaPrzypomnien;
+
     Adapter adapter;
 
+    Button dodajPrzypomnieniePrzycisk, usun;
+
+    //Array lista do dodawania kartek z przypomnieniami i wyświetlania ich w Recycleview
+    ArrayList <Kartka> zbiórDanych = new ArrayList<Kartka>();
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.przypomnienie_aktywnosc_menu);
 
-        dodajPrzypomnieniePrzycisk = (Button) findViewById(R.id.dodajPrzypomnienie); //Przycisk u dołu do zmiany aktywności
-        listaPrzypomnień = (RecyclerView) findViewById(R.id.lista);
-        listaPrzypomnień.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        //deleteReminder = (Button) findViewById(R.id.deleteReminder);
+        usun = (Button) findViewById(R.id.usun);
 
+        //Przycisk u dołu do zmiany aktywności
+        dodajPrzypomnieniePrzycisk = (Button) findViewById(R.id.dodajPrzypomnienie);
+        listaPrzypomnien = (RecyclerView) findViewById(R.id.lista);
+        listaPrzypomnien.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+
+         //Przycisk rozpoczyna nową aktywność, aby dodać Przypomnienie
         dodajPrzypomnieniePrzycisk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), Przypomnienie.class);
-                startActivity(intent);                                               //Rozpoczyna nową aktywność, aby dodać Przypomnienia
+                startActivity(intent);
+            }
+        });
+
+        usun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ZarzadzanieBazaDanych zarzadzanieBazaDanych = new ZarzadzanieBazaDanych(getApplicationContext());
+                zarzadzanieBazaDanych.usunWszystkiePrzypomnienia();
+                adapter.notifyDataSetChanged();
+
             }
         });
 
 
-        Cursor kursor = new ZarzadzanieBazaDanych(getApplicationContext()).czytWszystkiePrzypomnienia(); //kursor do ładowania danych z bazy
+          //kursor do ładowania danych z bazy
+        Cursor kursor = new ZarzadzanieBazaDanych(getApplicationContext()).czytWszystkiePrzypomnienia();
+
         while(kursor.moveToNext()){
-            Model model = new Model(kursor.getString(1),kursor.getString(2),kursor.getString(3));
-            zbiórDanych.add(model);
+            Kartka kartka = new Kartka(kursor.getString(1),kursor.getString(2),kursor.getString(3));
+            zbiórDanych.add(kartka);
         }
 
+    //Wiąże adapter z recyclerview
         adapter = new Adapter(zbiórDanych);
-        listaPrzypomnień.setAdapter(adapter);                   //Wiąże adapter z recyclerview
+        listaPrzypomnien.setAdapter(adapter);
     }
 
+
+    //Zmusza użytkownika do wyjścia z aplikacji
     public void onBackPressed(){
-        finish();                                       //Zmusza użytkownika do wyjścia z aplikacji
+        finish();
         super.onBackPressed();
     }
+
 
 }

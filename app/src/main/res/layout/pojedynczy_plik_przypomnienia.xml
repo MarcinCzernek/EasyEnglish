@@ -13,8 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Tytuł"
-        android:textSize="20dp"
         android:textColor="@color/black"
+        android:textSize="20dp"
         android:textStyle="bold" />
 
     <TextView
@@ -27,6 +27,24 @@
         android:textSize="20dp"
         android:textStyle="italic" />
 
+
+    <ImageView
+        android:id="@+id/edycjaPrzycisk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="9dp"
+        android:layout_toStartOf="@+id/usunPrzycisk"
+        android:src="@drawable/ic_edit" />
+
+    <ImageView
+        android:id="@+id/usunPrzycisk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/tytul"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_delete" />
 
     <TextView
         android:id="@+id/czas"

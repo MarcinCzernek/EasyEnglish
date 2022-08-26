@@ -87,26 +87,23 @@ public class Przypomnienie extends AppCompatActivity {
     }
 
     private void wybierzCzas() {
-    //ta metoda wykonuje zadanie wybieracza czasu
+        //ta metoda wykonuje zadanie wyboru czasu z menu
         Calendar kalendarz = Calendar.getInstance();
         int godzina = kalendarz.get(Calendar.HOUR_OF_DAY);
         int minuta = kalendarz.get(Calendar.MINUTE);
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+        TimePickerDialog dialogWyboruCzasu = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                czasNaPowiadomienie = i + ":" +i1; //zmienna temp. do przechowywania czasu do ustawienia alarmu
-                czasPrzycisk.setText(formatowanieCzasu(i,i1)); //ustawia tekst przycisku jako wybrany czas
+                //zmienna temp. do przechowywania czasu do ustawienia alarmu
+                czasNaPowiadomienie = i + ":" +i1;
+                //ustawia tekst przycisku jako wybrany czas
+                czasPrzycisk.setText(formatowanieCzasu(i,i1));
             }
         },godzina,minuta,true);
-        timePickerDialog.show();
+        dialogWyboruCzasu.show();
     }
 
     private String formatowanieCzasu(int godzina, int minuta) {
-        //ta metoda konwertuje czas na 12 godzinny format i przypisuje am lub pm
-        // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-        // String data = sdf.format(new Date(now));
-        // data jest teraz "2022-08-22 10:22:47"
-
         String czas;
         czas = "";
         String formatowanaMinuta;
@@ -122,7 +119,6 @@ public class Przypomnienie extends AppCompatActivity {
 
 
     private void wybierzDate() {
-
     GregorianCalendar kalendarz = (GregorianCalendar) GregorianCalendar.getInstance();
     int rok = kalendarz.get(Calendar.YEAR);
     int miesiac = kalendarz.get(Calendar.MONTH);
@@ -130,7 +126,8 @@ public class Przypomnienie extends AppCompatActivity {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int rok, int miesiac, int dzien) {
-                dataPrzycisk.setText(dzien + "-" +(miesiac + 1) + "-" + rok); //ustawia wybraną datę jako test dla przycisku
+                //ustawia wybraną datę jako test dla przycisku
+                dataPrzycisk.setText(dzien + "-" +(miesiac + 1) + "-" + rok);
             }
         },rok,miesiac,dzien);
         datePickerDialog.show();

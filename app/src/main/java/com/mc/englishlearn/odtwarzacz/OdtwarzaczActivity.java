@@ -180,16 +180,18 @@ public class OdtwarzaczActivity extends AppCompatActivity {
         replayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isRepeat){
-                    isRepeat = false;
-                    mMediaPlayer.setLooping(false);
-                    replayButton.setText("Powtórka wyłączona");
-                    Toast.makeText(OdtwarzaczActivity.this, "Tryb powtórki jest wyłączony", Toast.LENGTH_SHORT).show();
-                }else{
-                    isRepeat = true;
-                    mMediaPlayer.setLooping(true);
-                    replayButton.setText("Powtórka włączona");
-                    Toast.makeText(OdtwarzaczActivity.this, "Tryb powtórki jest włączony", Toast.LENGTH_SHORT).show();
+                if (mMediaPlayer != null) {
+                    if (isRepeat) {
+                        isRepeat = false;
+                        mMediaPlayer.setLooping(false);
+                        replayButton.setText("Powtórka wyłączona");
+                        Toast.makeText(OdtwarzaczActivity.this, "Tryb powtórki jest wyłączony", Toast.LENGTH_SHORT).show();
+                    } else {
+                        isRepeat = true;
+                        mMediaPlayer.setLooping(true);
+                        replayButton.setText("Powtórka włączona");
+                        Toast.makeText(OdtwarzaczActivity.this, "Tryb powtórki jest włączony", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

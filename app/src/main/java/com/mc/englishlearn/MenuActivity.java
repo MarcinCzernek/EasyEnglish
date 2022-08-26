@@ -15,6 +15,8 @@ import com.mc.englishlearn.odtwarzacz.OdtwarzaczActivity;
 import com.mc.englishlearn.przypomnienia.PrzypomnienieMenuActivity;
 
 
+// apka-a-0001-rc "release candidate" w fazie alfa
+
 public class MenuActivity extends AppCompatActivity {
 
     Button wyjsciePrzycisk;
@@ -26,6 +28,7 @@ public class MenuActivity extends AppCompatActivity {
 
         wyjsciePrzycisk = findViewById(R.id.wyjscie);
 
+        //Wyjście z aplikacji
         wyjsciePrzycisk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
