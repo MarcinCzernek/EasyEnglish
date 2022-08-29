@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="8dp"
+    android:padding="10dp"
+    >
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edytujTresc"
+        android:hint="Wpisz tekst"
+        android:padding="12dp"
+        android:lines="4"
+        android:gravity="center"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edytujDate"
+        android:hint="Podaj nową datę"
+        android:padding="12dp"
+        android:lines="4"
+        android:gravity="center"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edytujCzas"
+        android:hint="Podaj czas"
+        android:padding="12dp"
+        android:lines="4"
+        android:gravity="center"/>
+
+
+    <Button
+        android:id="@+id/aktualizujDanePrzycisk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Zaaktualizuj" />
+
+
+</LinearLayout>

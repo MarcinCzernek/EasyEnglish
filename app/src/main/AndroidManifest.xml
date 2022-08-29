@@ -21,13 +21,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="com.mc.englishlearn.nagrywanie.NagrywarkaMainActivity"
-            android:parentActivityName=".MenuActivity"
-            android:exported="true"/>
         <activity
             android:name=".przypomnienia.PrzypomnienieMenuActivity"
             android:parentActivityName=".MenuActivity"
             android:exported="true" />
+        <activity android:name=".nagrywanie.NagrywarkaMainActivity"
+            android:parentActivityName=".MenuActivity"
+            android:exported="true"/>
         <activity android:name=".odtwarzacz.OdtwarzaczActivity"
             android:parentActivityName=".MenuActivity"
             android:exported="true"/>
@@ -51,7 +51,6 @@
             android:foregroundServiceType="mediaProjection"
             android:exported="true"/>
 
-        <receiver android:name=".przypomnienia.Alarm" />
     </application>
 
 </manifest>

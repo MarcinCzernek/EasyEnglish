@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#00B0FF"
     android:padding="10dp"
-    tools:context=".MenuActivity">
+    tools:context=".przypomnienia.PrzypomnienieMenuActivity">
 
     <TextView
         android:id="@+id/tytulPrzypomnienia"
@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/dodajPrzypomnienie"
         android:layout_below="@id/tytulPrzypomnienia"
+        tools:listitem="@layout/lista_przypomnien"
         android:layout_marginTop="17dp" />
 
     <Button
@@ -34,16 +35,17 @@
         android:backgroundTint="@color/white"
         android:textColor="#00B0FF" />
 
+
     <Button
-        android:id="@+id/usun"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_alignParentTop="true"
+        android:id="@+id/resetPrzycisk"
+        android:layout_width="169dp"
+        android:layout_height="40dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="18dp"
-        android:backgroundTint="@color/red"
-        android:text="Usuń przypomnienia" />
+        android:layout_gravity="center"
+        android:layout_marginEnd="3dp"
+        android:backgroundTint="@color/white"
+        android:text="Usuń wszystkie fiszki"
+        android:textColor="#00B0FF" />
 
 
 </RelativeLayout>

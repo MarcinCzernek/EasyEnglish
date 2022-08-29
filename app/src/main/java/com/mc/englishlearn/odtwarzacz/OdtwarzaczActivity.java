@@ -45,10 +45,9 @@ public class OdtwarzaczActivity extends AppCompatActivity {
     Runnable mRunnable;
     Handler mHandler;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //zdefiniowanie obiektów graficznych np. przycisk
+        //zdefiniowanie zmiennych obiektów np. przycisk PLAY
         super.onCreate(savedInstanceState);
         setContentView(R.layout.odtwarzacz_aktywnosc);
         openButton = findViewById(R.id.open);
@@ -73,7 +72,7 @@ public class OdtwarzaczActivity extends AppCompatActivity {
                        // timer.shutdown();
                     } else {
                         mMediaPlayer.start();
-                        playButton.setText("PAUZA");//po starcie odtwarzania zmina tekstu na butonie na pauza
+                        playButton.setText("PAUZA");//po starcie odtwarzania zmiana tekstu na przycisku na pauze
 
                         //minutes = (max / 1000) / 60;//konwersja na minuty
                         //seconds = ((max / 1000) % 60);//konwersja na sekundy
@@ -84,7 +83,7 @@ public class OdtwarzaczActivity extends AppCompatActivity {
                         Log.i("Max", infoMs);
 
                         /*
-                         * użyj zadania Timer do aktualizacji postępu paska wyszukiwania zgodnie z mediaplayer Aktualna pozycja
+                         *  Zadanie Timer do aktualizacji postępu paska wyszukiwania zgodnie z mediaplayer Aktualna pozycja
                          * */
                         new Timer().scheduleAtFixedRate(new TimerTask() {
                             @Override
@@ -108,7 +107,7 @@ public class OdtwarzaczActivity extends AppCompatActivity {
             }
             });
 
-        //Tutaj przycisk otwarcia pliku audio z dysku
+        //Przycisk otwarcia pliku audio z dysku
         openButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,7 +119,7 @@ public class OdtwarzaczActivity extends AppCompatActivity {
         });
 
 
-        //Tutaj za ten podwójny suwak mający ustawiać początek i koniec:
+        //Podwójny suwak mający ustawiać początek i koniec:
         mRangeSeekBar.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener<Integer>() {
             @Override
             public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar, Integer minValue, Integer maxValue) {
@@ -230,6 +229,7 @@ public class OdtwarzaczActivity extends AppCompatActivity {
 
             max = mMediaPlayer.getDuration();
             mRangeSeekBar.setRangeValues(0, mMediaPlayer.getDuration());
+
           mSeekBar.setMax(mMediaPlayer.getDuration());
 
             long total_secs = TimeUnit.SECONDS.convert(max, TimeUnit.MILLISECONDS);
@@ -267,7 +267,7 @@ public class OdtwarzaczActivity extends AppCompatActivity {
         return fileName;
     }
 
-        //Koniec sesji
+    //Koniec sesji
     @Override
     protected void onDestroy() {
         super.onDestroy();

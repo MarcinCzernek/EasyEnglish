@@ -32,7 +32,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edytujZawartosc"
+            android:id="@+id/wpiszTresc"
             android:hint="Dodaj przypomnienie"
             android:background="#3000B0FF"
             android:padding="10dp"
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:text="Data"
+            android:text="Data powtórki"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editContent" />
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:text="Czas"
+            android:text="Czas powtórki"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline4"
             app:layout_constraintTop_toBottomOf="@+id/editContent" />
@@ -71,6 +71,7 @@
         android:layout_gravity="center"
         android:backgroundTint="@color/white"
         android:textColor="#00B0FF"/>
+
 
 
 </LinearLayout>

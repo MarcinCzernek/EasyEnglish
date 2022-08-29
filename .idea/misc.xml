@@ -18,6 +18,7 @@
         <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/drawable/background_edit.xml" value="0.1" />
         <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/drawable/ic_check_white_24dp.xml" value="0.3145" />
         <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/drawable/ic_delete.xml" value="0.329" />
+        <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/drawable/ic_edit.xml" value="0.1" />
         <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/drawable/ic_notifcation_record.xml" value="0.221" />
         <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/drawable/ic_notifcation_stop.xml" value="0.221" />
@@ -40,19 +41,23 @@
         <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/layout/activity_reminder_main3.xml" value="0.27708333333333335" />
         <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/layout/activity_reminder_message.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/layout/activity_splash.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/layout/dialog_update.xml" value="0.2890625" />
+        <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/layout/dialog_update.xml" value="0.1" />
         <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/layout/ekran_splash.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/layout/ekran_startowy.xml" value="0.3265625" />
+        <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/layout/list_row_main.xml" value="0.264" />
+        <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/layout/lista.xml" value="0.33" />
+        <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/layout/lista_przypomnien.xml" value="0.2984375" />
         <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/layout/menu_aktywnosc.xml" value="0.25" />
         <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/layout/nagrywarka_aktywnosc.xml" value="0.1" />
         <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/layout/newlist.xml" value="0.1" />
         <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/layout/notification_layout.xml" value="0.1" />
         <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/layout/odtwarzacz_aktywnosc.xml" value="0.45904173106646057" />
+        <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/layout/okno_dialogowe_edycji.xml" value="0.16574074074074074" />
         <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/layout/pojedynczy_plik_przypomnienia.xml" value="0.1" />
         <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/layout/powiadomienie_uklad.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/layout/przypomnienie_aktywnosc.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/layout/przypomnienie_aktywnosc_menu.xml" value="0.33" />
-        <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/layout/przypomnienie_aktywnosc_wiadomosc.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/layout/przypomnienie_aktywnosc.xml" value="0.1" />
+        <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/layout/przypomnienie_aktywnosc_menu.xml" value="0.25" />
+        <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/layout/przypomnienie_aktywnosc_wiadomosc.xml" value="0.10406091370558376" />
         <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/layout/przypomnienie_powiadomienie_uklad.xml" value="0.264" />
         <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/layout/single_reminder_file.xml" value="0.1" />
         <entry key="..\:/Users/Marcin Czernek/AndroidStudioProjects/EnglishLearnApp/app/src/main/res/layout/single_reminder_file2.xml" value="0.25" />
