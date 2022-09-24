@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#00B0FF"
     android:padding="10dp"
-    tools:context=".przypomnienia.PrzypomnienieMenuActivity">
+    tools:context=".przypomnienia.PrzypomnienieMenu">
 
     <TextView
         android:id="@+id/tytulPrzypomnienia"
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/dodajPrzypomnienie"
         android:layout_below="@id/tytulPrzypomnienia"
-        tools:listitem="@layout/lista_przypomnien"
+        tools:listitem="@layout/tablica_fiszek"
         android:layout_marginTop="17dp" />
 
     <Button

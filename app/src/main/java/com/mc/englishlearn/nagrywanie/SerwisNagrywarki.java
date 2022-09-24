@@ -1,8 +1,7 @@
 package com.mc.englishlearn.nagrywanie;
-//Spolszczenie w toku ...
 
-import static com.mc.englishlearn.nagrywanie.NagrywarkaMainActivity.EMISJA_DODATKOWYCH_DANYCH;
-import static com.mc.englishlearn.nagrywanie.NagrywarkaMainActivity.EMISJA_FALI_DZWIEKOWYCH;
+import static com.mc.englishlearn.nagrywanie.Nagrywarka.DANE_DODATKOWE;
+import static com.mc.englishlearn.nagrywanie.Nagrywarka.NADAWANIE_AUDIO;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -46,24 +45,25 @@ import java.nio.ByteOrder;
 public class SerwisNagrywarki extends Service {
 
     public static final int ID_POWIADOMIENIA = 1000;
-    public static final String POWIADOMIENIE_NAGRYWANIU_KANAŁU = "channel_recording";
 
-    //stała inf o zatrzymaniu żądania
-    private final static int ZATRZYAMNIE_ZADANIA = 1;
+    public static final String POWIADOMIENIE_NAGRYWANIU_KANAŁU = "kanalNagrywania";
+
+    private final static int ZATRZYMANIE_ZADANIA = 1;
+
     public final static String ZATRZYMANIE_AKCJI = "com.mc.englishlearn.recording.stop";
 
     private final static int ZADANIE_OTWARCIA_AKTYWNOSCI = 2;
 
-    private static int CZESTOTLIWOSC_PROBKOWANIA = 44100;
-    private final static int KODOWANIE_AUDIO = AudioFormat.ENCODING_PCM_16BIT;
     private final static int MASKA_KANAŁU_AUDIO = AudioFormat.CHANNEL_IN_MONO;
+    private final static int KODOWANIE_AUDIO = AudioFormat.ENCODING_PCM_16BIT;
+    private static int CZESTOTLIWOSC_PROBKOWANIA = 44100;
 
-    public final static String DODATKOWY_KOD = "code";
-    public final static String DODATKOWE_DANE = "data";
+    public final static String DODATKOWY_KOD = "kod";
+    public final static String DODATKOWE_DANE = "dane";
 
+    MediaProjectionManager zarzadzanieProjekcja;
     AudioRecord nagrywarka;
-    MediaProjectionManager zarządzanieProjekcjaMediow;
-    MediaProjection projekcjaMediow;
+    MediaProjection projekcja;
 
     Intent daneNagrywarki;
 
@@ -76,34 +76,27 @@ public class SerwisNagrywarki extends Service {
     public void onCreate(){
         super.onCreate();
 
-        // Celem jest aby uzyskać preferowany rozmiar bufora i częstotliwość próbkowania
-        AudioManager audioManager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
-        if (audioManager != null) {
-            String rate = audioManager.getProperty(AudioManager.PROPERTY_OUTPUT_SAMPLE_RATE);
-            CZESTOTLIWOSC_PROBKOWANIA = Integer.parseInt(rate);
+        AudioManager zarzadzAudio = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
+        if (zarzadzAudio != null) {
+            String wskaznik = zarzadzAudio.getProperty(AudioManager.PROPERTY_OUTPUT_SAMPLE_RATE);
+            CZESTOTLIWOSC_PROBKOWANIA = Integer.parseInt(wskaznik);
         }
 
-        final NotificationChannel channel = new NotificationChannel(POWIADOMIENIE_NAGRYWANIU_KANAŁU, "Nagrywanie", NotificationManager.IMPORTANCE_HIGH);
-        channel.setDescription("Powiadomienie związane z nagrywaniem.");
-        channel.setShowBadge(false);
-        channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+        final NotificationChannel kanal = new NotificationChannel(POWIADOMIENIE_NAGRYWANIU_KANAŁU, "Nagrywanie", NotificationManager.IMPORTANCE_HIGH);
+        kanal.setDescription("Powiadomienie związane z nagrywaniem.");
+        kanal.setShowBadge(false);
+        kanal.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
 
-        final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        if (notificationManager != null) {
-            notificationManager.createNotificationChannel(channel);
+        final NotificationManager zarzdzPowiadomieniem = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (zarzdzPowiadomieniem != null) {
+            zarzdzPowiadomieniem.createNotificationChannel(kanal);
         }
 
-        final IntentFilter filter = new IntentFilter();
-        filter.addAction(ZATRZYMANIE_AKCJI);
-        registerReceiver(stopBroadcastReceiver, filter);
+        final IntentFilter filtr = new IntentFilter();
+        filtr.addAction(ZATRZYMANIE_AKCJI);
+        registerReceiver(zatrzymajTransmisje, filtr);
 
 
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        unregisterReceiver(stopBroadcastReceiver);
     }
 
     @Nullable
@@ -112,51 +105,57 @@ public class SerwisNagrywarki extends Service {
         return null;
     }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        daneNagrywarki = intent.getParcelableExtra(DODATKOWE_DANE);
-        kodNagrywarki = intent.getIntExtra(DODATKOWY_KOD, 114);
 
-        final Notification notification = utworzPowiadomienie();
-        startForeground(ID_POWIADOMIENIA, notification);
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(zatrzymajTransmisje);
+    }
+
+    @Override
+    public int onStartCommand(Intent intencja, int flagi, int idStartu) {
+        daneNagrywarki = intencja.getParcelableExtra(DODATKOWE_DANE);
+        kodNagrywarki = intencja.getIntExtra(DODATKOWY_KOD, 114);
+
+        final Notification powiadomienie = utworzPowiadomienie();
+        startForeground(ID_POWIADOMIENIA, powiadomienie);
         startNagrywania();
         return START_STICKY;
     }
 
     private Notification utworzPowiadomienie() {
-        final Intent parentIntent = new Intent(this, NagrywarkaMainActivity.class);
-        parentIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        final Intent targetIntent = new Intent(this, NagrywarkaMainActivity.class);
+        final Intent cel = new Intent(this, Nagrywarka.class);
+        final Intent admin = new Intent(this, Nagrywarka.class);
 
-        final Intent disconnect = new Intent(ZATRZYMANIE_AKCJI);
-        final PendingIntent disconnectAction = PendingIntent.getBroadcast(this, ZATRZYAMNIE_ZADANIA, disconnect, PendingIntent.FLAG_UPDATE_CURRENT);
+        admin.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        final Intent zatrzymanie = new Intent(ZATRZYMANIE_AKCJI);
 
-        //Obydwa powyższe działania mają zaznaczone launchMode="singleTask" w pliku AndroidManifest.xml, więc jeśli zadanie jest już uruchomione, zostanie wznowione
-        final PendingIntent pendingIntent = PendingIntent.getActivities(this, ZADANIE_OTWARCIA_AKTYWNOSCI, new Intent[]{parentIntent, targetIntent}, PendingIntent.FLAG_UPDATE_CURRENT);
-        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this, POWIADOMIENIE_NAGRYWANIU_KANAŁU);
-        builder.setContentIntent(pendingIntent);
-        builder.setPriority(NotificationCompat.PRIORITY_MAX);
-        builder.setContentTitle("Nagrywanie Audio").setContentText("Trwa nagrywanie!");
-        builder.setSmallIcon(R.drawable.ic_notifcation_record);
-        builder.setColor(ContextCompat.getColor(this, R.color.colorRecording));
-        builder.setOnlyAlertOnce(true).setShowWhen(true).setDefaults(0).setAutoCancel(true).setOngoing(true);
-        builder.addAction(new NotificationCompat.Action(R.drawable.ic_notifcation_stop, "Zatrzymaj nagrywanie", disconnectAction));
+        final PendingIntent zatrzymanieZadania = PendingIntent.getBroadcast(this, ZATRZYMANIE_ZADANIA, zatrzymanie, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        return builder.build();
+        final PendingIntent intencjaOczekujaca = PendingIntent.getActivities(this, ZADANIE_OTWARCIA_AKTYWNOSCI, new Intent[]{admin, cel}, PendingIntent.FLAG_UPDATE_CURRENT);
+        final NotificationCompat.Builder konstruktor = new NotificationCompat.Builder(this, POWIADOMIENIE_NAGRYWANIU_KANAŁU);
+        konstruktor.setPriority(NotificationCompat.PRIORITY_MAX);
+        konstruktor.setContentIntent(intencjaOczekujaca);
+        konstruktor.setColor(ContextCompat.getColor(this, R.color.gold));
+        konstruktor.setSmallIcon(R.drawable.nagrywanie);
+        konstruktor.setContentTitle("Nagrywanie Audio").setContentText("Trwa nagrywanie!");
+        konstruktor.addAction(new NotificationCompat.Action(R.drawable.zatrzymanie, "Zatrzymaj nagrywanie", zatrzymanieZadania));
+        konstruktor.setOnlyAlertOnce(true).setShowWhen(true).setDefaults(0).setAutoCancel(true).setOngoing(true);
+        return konstruktor.build();
     }
 
-    //Funkcja rozpoczynająca nagrywanie
+
     @SuppressLint("NewApi")
     @TargetApi(Build.VERSION_CODES.O)
     void startNagrywania() {
-        zarządzanieProjekcjaMediow = (MediaProjectionManager) getSystemService(Context.MEDIA_PROJECTION_SERVICE);
+        zarzadzanieProjekcja = (MediaProjectionManager) getSystemService(Context.MEDIA_PROJECTION_SERVICE);
 
-        if (zarządzanieProjekcjaMediow == null)
+        if (zarzadzanieProjekcja == null)
             return;
 
-        projekcjaMediow = zarządzanieProjekcjaMediow.getMediaProjection(kodNagrywarki, daneNagrywarki);
+        projekcja = zarzadzanieProjekcja.getMediaProjection(kodNagrywarki, daneNagrywarki);
 
-        AudioPlaybackCaptureConfiguration config = new AudioPlaybackCaptureConfiguration.Builder(projekcjaMediow)
+        AudioPlaybackCaptureConfiguration konfiguracja = new AudioPlaybackCaptureConfiguration.Builder(projekcja)
                 .addMatchingUsage(AudioAttributes.USAGE_MEDIA)
                 .build();
 
@@ -166,7 +165,7 @@ public class SerwisNagrywarki extends Service {
                                 .setSampleRate(CZESTOTLIWOSC_PROBKOWANIA)
                                 .setChannelMask(MASKA_KANAŁU_AUDIO)
                                 .build())
-                .setAudioPlaybackCaptureConfig(config)
+                .setAudioPlaybackCaptureConfig(konfiguracja)
                 .build();
 
         nagrywarka.startRecording();
@@ -175,7 +174,6 @@ public class SerwisNagrywarki extends Service {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                //Uruchamia dowolny kod w tle, który tutaj potrzebuję
                 try {
                     zapiszPlik();
                 } catch (IOException e) {
@@ -199,181 +197,137 @@ public class SerwisNagrywarki extends Service {
     }
 
     private void zapiszPlik() throws IOException {
-        final int BUFFER_SIZE = 2 * AudioRecord.getMinBufferSize(CZESTOTLIWOSC_PROBKOWANIA, MASKA_KANAŁU_AUDIO, KODOWANIE_AUDIO);
+        final int ROZMIAR_BUFORA = 2 * AudioRecord.getMinBufferSize(CZESTOTLIWOSC_PROBKOWANIA, MASKA_KANAŁU_AUDIO, KODOWANIE_AUDIO);
+        byte[] bufor = new byte[ROZMIAR_BUFORA];
+        int odczyt;
+        long suma = 0;
 
-        byte[] buffer = new byte[BUFFER_SIZE];
-        int read;
-        long total = 0;
+        File plikWAV = new File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "nagranie_" + System.currentTimeMillis() / 1000 + ".wav");
+        plikWAV.getParentFile().mkdir();
+        plikWAV.createNewFile();
 
-        File wavFile = new File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "nagranie_" + System.currentTimeMillis() / 1000 + ".wav");
-        wavFile.getParentFile().mkdir();
-        wavFile.createNewFile();
-
-        Log.d("test", "utworzone pliki: " + wavFile.getAbsolutePath());
-        FileOutputStream wavOut = new FileOutputStream(wavFile);
-        // Piszę nagłówek pliku wav
-        zapisWavHeader(wavOut, MASKA_KANAŁU_AUDIO, CZESTOTLIWOSC_PROBKOWANIA, KODOWANIE_AUDIO);
+        Log.d("test", "utworzone pliki: " + plikWAV.getAbsolutePath());
+        FileOutputStream wyjsciePlikuWAV = new FileOutputStream(plikWAV);
+        zapisWavHeader(wyjsciePlikuWAV, MASKA_KANAŁU_AUDIO, CZESTOTLIWOSC_PROBKOWANIA, KODOWANIE_AUDIO);
 
         while (stanNagrywarki) {
-            read = nagrywarka.read(buffer, 0, buffer.length);
+            odczyt = nagrywarka.read(bufor, 0, bufor.length);
 
-            // WAVs cannot be > 4 GB due to the use of 32 bit unsigned integers.
-            if (total + read > 4294967295L) {
-                // Write as many bytes as we can before hitting the max size
-                for (int i = 0; i < read && total <= 4294967295L; i++, total++) {
-                    wavOut.write(buffer[i]);
+            if (suma + odczyt > 4294967295L) {
+
+                for (int i = 0; i < odczyt && suma <= 4294967295L; i++, suma++) {
+                    wyjsciePlikuWAV.write(bufor[i]);
                 }
                 stanNagrywarki = false;
             } else {
-                // Wypisuję cały bufor odczytu
-                wavOut.write(buffer, 0, read);
-                total += read;
+
+                wyjsciePlikuWAV.write(bufor, 0, odczyt);
+                suma += odczyt;
             }
         }
         try {
-            wavOut.close();
+            wyjsciePlikuWAV.close();
         } catch (IOException ex) {
-            //
             ex.printStackTrace();
         }
-        aktualizacjaWavHeader(wavFile);
-        //Transmisja pomiarowa
-        final Intent broadcast = new Intent(EMISJA_FALI_DZWIEKOWYCH);
-        broadcast.putExtra(EMISJA_DODATKOWYCH_DANYCH, wavFile);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(broadcast);
+        aktualizacjaWavHeader(plikWAV);
+
+        final Intent transmisja = new Intent(NADAWANIE_AUDIO);
+        transmisja.putExtra(DANE_DODATKOWE, plikWAV);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(transmisja);
     }
 
-    /**
-     * Writes the proper 44-byte RIFF/WAVE header to/for the given stream
-     * Two size fields are left empty/null since we do not yet know the final stream size
-     *
-     * @param out         The stream to write the header to
-     * @param channelMask An AudioFormat.CHANNEL_* mask
-     * @param sampleRate  The sample rate in hertz
-     * @param encoding    An AudioFormat.ENCODING_PCM_* value
-     * @throws IOException
-     */
-    private static void zapisWavHeader(OutputStream out, int channelMask, int sampleRate, int encoding) throws IOException {
-        short channels;
-        switch (channelMask) {
+    private static void zapisWavHeader(OutputStream strumienWyjsciowy, short kanalyLiczba, int czestProbkowania, short rozdzBitowa) throws IOException {
+        byte[] mniejszeBajty = ByteBuffer
+                .allocate(14)
+                .order(ByteOrder.LITTLE_ENDIAN)
+                .putShort(kanalyLiczba)
+                .putInt(czestProbkowania)
+                .putInt(czestProbkowania * kanalyLiczba * (rozdzBitowa / 8))
+                .putShort((short) (kanalyLiczba * (rozdzBitowa / 8)))
+                .putShort(rozdzBitowa)
+                .array();
+        strumienWyjsciowy.write(new byte[]{
+                'R', 'I', 'F', 'F',
+                0, 0, 0, 0,
+                'W', 'A', 'V', 'E',
+                'f', 'm', 't', ' ',
+                16, 0, 0, 0,
+                1, 0,
+                mniejszeBajty[0], mniejszeBajty[1],
+                mniejszeBajty[2], mniejszeBajty[3], mniejszeBajty[4], mniejszeBajty[5],
+                mniejszeBajty[6], mniejszeBajty[7], mniejszeBajty[8], mniejszeBajty[9],
+                mniejszeBajty[10], mniejszeBajty[11],
+                mniejszeBajty[12], mniejszeBajty[13],
+                'd', 'a', 't', 'a',
+                0, 0, 0, 0,
+        });
+    }
+
+    private static void aktualizacjaWavHeader(File plikWAV) throws IOException {
+        byte[] formaty = ByteBuffer
+                .allocate(8)
+                .order(ByteOrder.LITTLE_ENDIAN)
+                .putInt((int) (plikWAV.length() - 8))
+                .putInt((int) (plikWAV.length() - 44))
+                .array();
+
+        RandomAccessFile dostepAudio = null;
+
+        try {
+            dostepAudio = new RandomAccessFile(plikWAV, "rw");
+            dostepAudio.seek(4);
+            dostepAudio.write(formaty, 0, 4);
+            dostepAudio.seek(40);
+            dostepAudio.write(formaty, 4, 4);
+        } catch (IOException wyjatek) {
+
+            throw wyjatek;
+        } finally {
+            if (dostepAudio != null) {
+                try {
+                    dostepAudio.close();
+                } catch (IOException wyjatek) {
+
+                }
+            }
+        }
+    }
+
+    private static void zapisWavHeader(OutputStream strumienWyjsciowy, int maskaKanalu, int czestProbkowania, int kodowanie) throws IOException {
+        short kanaly;
+        switch (maskaKanalu) {
             case AudioFormat.CHANNEL_IN_MONO:
-                channels = 1;
+                kanaly = 1;
                 break;
             case AudioFormat.CHANNEL_IN_STEREO:
-                channels = 2;
+                kanaly = 2;
                 break;
             default:
                 throw new IllegalArgumentException("Nieprawidłowa maska kanału");
         }
 
-        short bitDepth;
-        switch (encoding) {
+        short rozdzBitowa;
+        switch (kodowanie) {
             case AudioFormat.ENCODING_PCM_8BIT:
-                bitDepth = 8;
+                rozdzBitowa = 8;
                 break;
             case AudioFormat.ENCODING_PCM_16BIT:
-                bitDepth = 16;
+                rozdzBitowa = 16;
                 break;
             case AudioFormat.ENCODING_PCM_FLOAT:
-                bitDepth = 32;
+                rozdzBitowa = 32;
                 break;
             default:
-                throw new IllegalArgumentException("Nieprawidłowe kodowanie");
+                throw new IllegalArgumentException("Nieprawidłowe enkodowanie");
         }
 
-        zapisWavHeader(out, channels, sampleRate, bitDepth);
+        zapisWavHeader(strumienWyjsciowy, kanaly, czestProbkowania, rozdzBitowa);
     }
 
-    /**
-     * Writes the proper 44-byte RIFF/WAVE header to/for the given stream
-     * Two size fields are left empty/null since we do not yet know the final stream size
-     *
-     * @param out        The stream to write the header to
-     * @param channels   The number of channels
-     * @param sampleRate The sample rate in hertz
-     * @param bitDepth   The bit depth
-     * @throws IOException
-     */
-    private static void zapisWavHeader(OutputStream out, short channels, int sampleRate, short bitDepth) throws IOException {
-        // Konwersja wielobajtowych liczb całkowitych (int) na surowe bajty w formacie little endian, zgodnie z wymaganiami specyfikacji
-        byte[] littleBytes = ByteBuffer
-                .allocate(14)
-                .order(ByteOrder.LITTLE_ENDIAN)
-                .putShort(channels)
-                .putInt(sampleRate)
-                .putInt(sampleRate * channels * (bitDepth / 8))
-                .putShort((short) (channels * (bitDepth / 8)))
-                .putShort(bitDepth)
-                .array();
-
-        // Niekoniecznie najlepszy, ale bardzo łatwy do zwizualizowania sposób
-        out.write(new byte[]{
-                // RIFF header
-                'R', 'I', 'F', 'F', // ChunkID
-                0, 0, 0, 0, // ChunkSize (musi zostać uaktualniony później)
-                'W', 'A', 'V', 'E', // Format
-                // fmt subchunk
-                'f', 'm', 't', ' ', // Subchunk1ID
-                16, 0, 0, 0, // Subchunk1Size
-                1, 0, // AudioFormat
-                littleBytes[0], littleBytes[1], // NumChannels
-                littleBytes[2], littleBytes[3], littleBytes[4], littleBytes[5], // SampleRate
-                littleBytes[6], littleBytes[7], littleBytes[8], littleBytes[9], // ByteRate
-                littleBytes[10], littleBytes[11], // BlockAlign
-                littleBytes[12], littleBytes[13], // BitsPerSample
-                // data subchunk
-                'd', 'a', 't', 'a', // Subchunk2ID
-                0, 0, 0, 0, // Subchunk2Size (musi zostać uaktualniony później)
-        });
-    }
-
-    /**
-     * Aktualizuje nagłówek danego pliku wav, aby uwzględnić ostateczne rozmiary porcji
-     *
-     * @param wav Plik wav do aktualizacji
-     * @throws IOException
-     */
-    private static void aktualizacjaWavHeader(File wav) throws IOException {
-        byte[] sizes = ByteBuffer
-                .allocate(8)
-                .order(ByteOrder.LITTLE_ENDIAN)
-                // Prawdopodobnie istnieje wiele różnych/lepszych sposobów obliczania
-                // tych dwóch, biorąc pod uwagę okoliczności. Obsada powinna być bezpieczna, ponieważ jeśli WAV jest
-                // > 4 GB już popełniliśmy wielki błąd.
-                .putInt((int) (wav.length() - 8)) // ChunkSize
-                .putInt((int) (wav.length() - 44)) // Subchunk2Size
-                .array();
-
-        RandomAccessFile accessWave = null;
-        //noinspection CaughtExceptionImmediatelyRethrown
-        try {
-            accessWave = new RandomAccessFile(wav, "rw");
-            // ChunkSize
-            accessWave.seek(4);
-            accessWave.write(sizes, 0, 4);
-
-            // Subchunk2Size
-            accessWave.seek(40);
-            accessWave.write(sizes, 4, 4);
-        } catch (IOException ex) {
-            // Rethrow ale nadal zamykam accessWave w naszym finale
-            throw ex;
-        } finally {
-            if (accessWave != null) {
-                try {
-                    accessWave.close();
-                } catch (IOException ex) {
-                    //
-                }
-            }
-        }
-    }
-    /**
-     * Ten broadcast receiver nasłuchuje na {@link #ZATRZYMANIE_AKCJI} który może zostać zwolniony poprzez nacisnięcie Stop przycisk akcji na powiadomieniu
-     */
-    private final BroadcastReceiver stopBroadcastReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver zatrzymajTransmisje= new BroadcastReceiver() {
         @Override
-        public void onReceive(final Context context, final Intent intent) {
+        public void onReceive(final Context kontekst, final Intent intencja) {
             zatrzymanieNagrywania();
         }
     };

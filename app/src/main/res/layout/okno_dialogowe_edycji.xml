@@ -1,46 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_margin="8dp"
+    android:background="#00B0FF"
+    android:layout_margin="10dp"
     android:padding="10dp"
-    >
+    tools:context=".przypomnienia.Przypomnienie">
 
-    <EditText
+
+    <TextView
+        android:id="@+id/nowyTytulPrzypomnienia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/edytujTresc"
-        android:hint="Wpisz tekst"
-        android:padding="12dp"
-        android:lines="4"
-        android:gravity="center"/>
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_margin="20dp"
+        android:text="Edytuj przypomnienie" />
 
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/edytujDate"
-        android:hint="Podaj nową datę"
-        android:padding="12dp"
-        android:lines="4"
-        android:gravity="center"/>
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_corner">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/edytujCzas"
-        android:hint="Podaj czas"
-        android:padding="12dp"
-        android:lines="4"
-        android:gravity="center"/>
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edytujTresc"
+            android:hint="Wpisz tekst"
+            android:background="#3000B0FF"
+            android:padding="10dp"
+            android:lines="4"
+            android:gravity="center"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edytujDate"
+            android:hint="Podaj nową datę"
+            android:background="#3000B0FF"
+            android:padding="10dp"
+            android:lines="4"
+            android:gravity="center"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edytujCzas"
+            android:hint="Podaj czas"
+            android:background="#3000B0FF"
+            android:padding="10dp"
+            android:lines="4"
+            android:gravity="center"/>
+    </LinearLayout>
 
     <Button
         android:id="@+id/aktualizujDanePrzycisk"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Zaaktualizuj" />
+        android:text="Zaaktualizuj"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/white"
+        android:textColor="#00B0FF"/>
 
 
 </LinearLayout>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MenuActivity"
+    tools:context=".MenuAplikacji"
     android:background="#00B0FF">
 
     <Button
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="158dp"
         android:layout_marginEnd="159dp"
-        android:onClick="createNewIntentPlayer"
+        android:onClick="odtwarzacz"
         android:text="Odtwarzacz"
         android:backgroundTint="@color/white"
         android:textColor="#00B0FF"
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:onClick="createNewIntentReminder"
+        android:onClick="przypomnienia"
         android:text="Przypomnienia"
         android:backgroundTint="@color/white"
         android:textColor="#00B0FF"
@@ -40,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:onClick="createNewIntentRecorder"
+        android:onClick="nagrywacz"
         android:text="Nagrywanie"
         android:backgroundTint="@color/white"
         android:textColor="#00B0FF"

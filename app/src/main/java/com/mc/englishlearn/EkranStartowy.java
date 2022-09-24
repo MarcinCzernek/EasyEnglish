@@ -6,22 +6,16 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.mc.englishlearn.MenuActivity;
-import com.mc.englishlearn.R;
-
-public class EkranStartowyActivity extends AppCompatActivity {
+public class EkranStartowy extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.ekran_startowy);
-
         int sekundyOpoznione = 1;
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                //po 500 milisekundach ten blok wywołuje menu główne aplikacji
-                startActivity(new Intent(getApplicationContext(), MenuActivity.class));
+                startActivity(new Intent(getApplicationContext(), MenuAplikacji.class));
                 finish();
             }
         }, sekundyOpoznione * 500);

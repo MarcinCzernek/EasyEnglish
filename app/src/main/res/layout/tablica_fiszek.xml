@@ -63,7 +63,7 @@
                 android:paddingTop="20px"
                 android:paddingLeft="10px"
                 android:layout_alignEnd="@+id/tytul"
-                android:src="@drawable/ikona_usun" />
+                android:src="@drawable/usun" />
 
             <ImageView
                 android:id="@+id/edycjaFiszki"
@@ -76,7 +76,7 @@
                 android:paddingLeft="10px"
                 android:layout_toStartOf="@+id/usunPrzycisk"
                 android:layout_toRightOf="@id/usunPrzycisk"
-                android:src="@drawable/ikona_edytuj" />
+                android:src="@drawable/edytuj" />
 
 
         </LinearLayout>

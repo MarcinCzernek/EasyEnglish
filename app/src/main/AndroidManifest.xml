@@ -4,6 +4,11 @@
     package="com.mc.englishlearn">
 
     <!--Zezwolenie na nagrywanie dźwięku i przechowywanie dźwięku w urządzeniu użytkownika-->
+    <!--1.Nagrywanie audio.
+        2.Używanie rejestrowania dzwięku jako serwis foreground.
+        3.Zapis plików dzwiękowych do pamięci urządzenia.
+        4.Odczyt plików dzwiękowch z pamięci urządzenia
+     -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -22,22 +27,22 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".przypomnienia.PrzypomnienieMenuActivity"
-            android:parentActivityName=".MenuActivity"
+            android:name=".przypomnienia.PrzypomnienieMenu"
+            android:parentActivityName=".MenuAplikacji"
             android:exported="true" />
-        <activity android:name=".nagrywanie.NagrywarkaMainActivity"
-            android:parentActivityName=".MenuActivity"
+        <activity android:name=".nagrywanie.Nagrywarka"
+            android:parentActivityName=".MenuAplikacji"
             android:exported="true"/>
-        <activity android:name=".odtwarzacz.OdtwarzaczActivity"
-            android:parentActivityName=".MenuActivity"
+        <activity android:name=".odtwarzacz.Odtwarzacz"
+            android:parentActivityName=".MenuAplikacji"
             android:exported="true"/>
         <activity android:name=".przypomnienia.Przypomnienie"
-            android:parentActivityName=".przypomnienia.PrzypomnienieMenuActivity"
+            android:parentActivityName=".przypomnienia.PrzypomnienieMenu"
             android:exported="true"/>
         <activity
-            android:name=".MenuActivity"
+            android:name=".MenuAplikacji"
             android:exported="true"/>
-        <activity android:name=".EkranStartowyActivity">
+        <activity android:name=".EkranStartowy">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -50,6 +55,16 @@
             android:enabled="true"
             android:foregroundServiceType="mediaProjection"
             android:exported="true"/>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider> <!-- <grant-uri-permission android:pathPrefix="/tracks/" /> -->
 
     </application>
 

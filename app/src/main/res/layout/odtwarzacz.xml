@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".odtwarzacz.OdtwarzaczActivity">
+    tools:context=".odtwarzacz.Odtwarzacz">
 
 
     <TextView
@@ -22,7 +22,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/play"
+        android:id="@+id/graj"
         android:layout_width="wrap_content"
         android:layout_height="37dp"
         android:layout_marginStart="161dp"
@@ -34,26 +34,26 @@
         app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
     <org.florescu.android.rangeseekbar.RangeSeekBar
-        android:id="@+id/rangeSeekBar"
+        android:id="@+id/pasekZasiegu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/seekBar"
+        app:layout_constraintBottom_toTopOf="@+id/pasekPostepu"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/elapse" />
+        app:layout_constraintTop_toBottomOf="@+id/minionyCzas" />
 
     <SeekBar
-        android:id="@+id/seekBar"
+        android:id="@+id/pasekPostepu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rangeSeekBar" />
+        app:layout_constraintTop_toBottomOf="@+id/pasekZasiegu" />
 
     <TextView
-        android:id="@+id/elapse"
+        android:id="@+id/minionyCzas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="76dp"
@@ -61,7 +61,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/tytulUtworu" />
 
     <androidx.constraintlayout.widget.Barrier
         android:layout_width="wrap_content"
@@ -70,11 +70,8 @@
         tools:layout_editor_absoluteX="92dp"
         tools:layout_editor_absoluteY="357dp" />
 
-    <!-- Tytuł utworu-->
-
-
     <Button
-        android:id="@+id/open"
+        android:id="@+id/otworz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="154dp"
@@ -85,10 +82,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/play" />
+        app:layout_constraintTop_toBottomOf="@+id/graj" />
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/tytulUtworu"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginTop="72dp"
@@ -98,7 +95,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tytulOdtwarzacza" />
 
     <Button
-        android:id="@+id/replayButton"
+        android:id="@+id/powtorkaPrzycisk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="150dp"
@@ -109,7 +106,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.263"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/open" />
+        app:layout_constraintTop_toBottomOf="@+id/otworz" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"

@@ -12,9 +12,9 @@
     <color name="orange">#FF9800</color>
     <color name="light_blue">#4FC8FF</color>
     <color name="green">#50E156</color>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
-    <color name="colorRecording">#F1593A</color>
+    <color name="colorPrimary">#1C63DF</color>
+    <color name="colorPrimaryDark">#00337E</color>
+    <color name="colorAccent">#03AFDA</color>
+    <color name="gold">#F8C93C</color>
     <color name="gray">#bdbdbd</color>
 </resources>
