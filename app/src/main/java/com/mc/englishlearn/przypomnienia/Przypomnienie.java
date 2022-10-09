@@ -61,11 +61,11 @@ public class Przypomnienie extends AppCompatActivity {
                     dataPrzycisk.setText("DATA");
 
                     listaDanych.clear();
-                    Toast.makeText(Przypomnienie.this, "Sukces!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Przypomnienie.this, "Dodano nową fiszkę", Toast.LENGTH_LONG).show();
 
                 } else {
                     konstruktor = new AlertDialog.Builder(Przypomnienie.this);
-                    konstruktor.setMessage("Pole tekstowe nie może być puste!!")
+                    konstruktor.setMessage("Uzupełnij pole tekstowe")
                             .setCancelable(false)
                             .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {

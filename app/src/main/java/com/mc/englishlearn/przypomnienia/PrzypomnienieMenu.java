@@ -57,7 +57,7 @@ public class PrzypomnienieMenu extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             konstruktor = new AlertDialog.Builder(v.getContext());
-            konstruktor.setMessage("Czy na pewno chcesz usunąć wszystkie fiszki z przypomnieniami?")
+            konstruktor.setMessage("Usunąć wszystkie fiszki?")
                     .setCancelable(false)
                     .setPositiveButton("Tak", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
@@ -73,7 +73,7 @@ public class PrzypomnienieMenu extends AppCompatActivity {
                         }
                     });
             AlertDialog alarmDialog = konstruktor.create();
-            alarmDialog.setTitle("Potwierdzenie usunięcia wszystkich przypomnień");
+            alarmDialog.setTitle("Usunięcia wszystkich przypomnień");
             alarmDialog.show();
 
         }

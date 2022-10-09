@@ -50,7 +50,7 @@ public class SerwisNagrywarki extends Service {
 
     private final static int ZATRZYMANIE_ZADANIA = 1;
 
-    public final static String ZATRZYMANIE_AKCJI = "com.mc.englishlearn.recording.stop";
+    public final static String ZATRZYMANIE_AKCJI = "com.mc.englishlearn.nagrywanie.stop";
 
     private final static int ZADANIE_OTWARCIA_AKTYWNOSCI = 2;
 
@@ -61,9 +61,14 @@ public class SerwisNagrywarki extends Service {
     public final static String DODATKOWY_KOD = "kod";
     public final static String DODATKOWE_DANE = "dane";
 
+
+
     MediaProjectionManager zarzadzanieProjekcja;
+
     AudioRecord nagrywarka;
+
     MediaProjection projekcja;
+
 
     Intent daneNagrywarki;
 
@@ -82,14 +87,15 @@ public class SerwisNagrywarki extends Service {
             CZESTOTLIWOSC_PROBKOWANIA = Integer.parseInt(wskaznik);
         }
 
+
         final NotificationChannel kanal = new NotificationChannel(POWIADOMIENIE_NAGRYWANIU_KANAŁU, "Nagrywanie", NotificationManager.IMPORTANCE_HIGH);
         kanal.setDescription("Powiadomienie związane z nagrywaniem.");
         kanal.setShowBadge(false);
         kanal.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
 
-        final NotificationManager zarzdzPowiadomieniem = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        if (zarzdzPowiadomieniem != null) {
-            zarzdzPowiadomieniem.createNotificationChannel(kanal);
+        final NotificationManager zarzadzPowiadomieniem = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (zarzadzPowiadomieniem != null) {
+            zarzadzPowiadomieniem.createNotificationChannel(kanal);
         }
 
         final IntentFilter filtr = new IntentFilter();
@@ -98,6 +104,7 @@ public class SerwisNagrywarki extends Service {
 
 
     }
+
 
     @Nullable
     @Override
@@ -112,6 +119,8 @@ public class SerwisNagrywarki extends Service {
         unregisterReceiver(zatrzymajTransmisje);
     }
 
+
+
     @Override
     public int onStartCommand(Intent intencja, int flagi, int idStartu) {
         daneNagrywarki = intencja.getParcelableExtra(DODATKOWE_DANE);
@@ -122,6 +131,7 @@ public class SerwisNagrywarki extends Service {
         startNagrywania();
         return START_STICKY;
     }
+
 
     private Notification utworzPowiadomienie() {
         final Intent cel = new Intent(this, Nagrywarka.class);
@@ -183,6 +193,7 @@ public class SerwisNagrywarki extends Service {
         }).start();
     }
 
+
     private void zatrzymanieNagrywania() {
         try {
             stanNagrywarki = false;
@@ -195,6 +206,7 @@ public class SerwisNagrywarki extends Service {
             e.printStackTrace();
         }
     }
+
 
     private void zapiszPlik() throws IOException {
         final int ROZMIAR_BUFORA = 2 * AudioRecord.getMinBufferSize(CZESTOTLIWOSC_PROBKOWANIA, MASKA_KANAŁU_AUDIO, KODOWANIE_AUDIO);
@@ -324,6 +336,7 @@ public class SerwisNagrywarki extends Service {
 
         zapisWavHeader(strumienWyjsciowy, kanaly, czestProbkowania, rozdzBitowa);
     }
+
 
     private final BroadcastReceiver zatrzymajTransmisje= new BroadcastReceiver() {
         @Override

@@ -11,7 +11,6 @@ import androidx.room.RoomDatabase;
 public abstract class BazaDanych extends RoomDatabase {
 
     private static String BAZADANYCH = "engLearnBazDanych";
-
     private static BazaDanych bazadanych;
 
     public synchronized static BazaDanych pobierzInstancjeBazyDanych(Context kontekst){

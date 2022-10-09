@@ -15,35 +15,42 @@ import com.mc.englishlearn.odtwarzacz.Odtwarzacz;
 import com.mc.englishlearn.przypomnienia.PrzypomnienieMenu;
 
 
-// apka-a-0001-rc "release candidate" w fazie alfa
 
 public class MenuAplikacji extends AppCompatActivity {
+
 
     Button wyjsciePrzycisk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.menu);
 
+
         wyjsciePrzycisk = findViewById(R.id.wyjscie);
+
         wyjsciePrzycisk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View widok) {
+
                 Intent intencjaMenu = new Intent(Intent.ACTION_MAIN);
+
                 intencjaMenu.addCategory( Intent.CATEGORY_HOME );
+
                 intencjaMenu.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
                 startActivity(intencjaMenu);
             }
         });
     }
 
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void odtwarzacz (View widok){
         Intent intencja = new Intent(this, Odtwarzacz.class);
         startActivity(intencja);
-      //  Context context = getApplicationContext();
-       // context.startForegroundService(intencja);
+
     }
 
     public void przypomnienia (View widok){

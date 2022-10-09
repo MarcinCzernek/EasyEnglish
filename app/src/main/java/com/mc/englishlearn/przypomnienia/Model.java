@@ -6,8 +6,10 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
+
 @Entity(tableName = "fiszki")
 public class Model implements Serializable {
+
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -17,6 +19,7 @@ public class Model implements Serializable {
     private String tresc;
     @ColumnInfo(name = "data")
     private String data;
+
 
     public int getId() {
         return id;

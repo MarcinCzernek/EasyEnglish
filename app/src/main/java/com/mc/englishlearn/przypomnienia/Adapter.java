@@ -125,7 +125,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 konstruktorAlertu= new AlertDialog.Builder(v.getContext());
-                konstruktorAlertu.setMessage("Czy jesteś pewny aby usunąć fiszkę z przypomnieniem?")
+                konstruktorAlertu.setMessage("Usunąć wybraną fiszkę?")
                         .setCancelable(false)
                         .setPositiveButton("Tak", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -143,7 +143,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                             }
                         });
                 AlertDialog alarm = konstruktorAlertu.create();
-                alarm.setTitle("Potwierdź usunięcie");
+                alarm.setTitle("Usunięcie fiszki");
                 alarm.show();
             }
         });

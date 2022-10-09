@@ -31,23 +31,37 @@ import java.util.concurrent.TimeUnit;
 
 public class Odtwarzacz extends AppCompatActivity {
 
+
     RangeSeekBar<Integer> pasekZakresu;
+
     MediaPlayer odtwarzaczAudio;
+
     Button grajPrzycisk, otworzPrzycisk, powtorkaPrzycisk;
+
     static int max;
+
     static int min;
+
     SeekBar pasekPostepu;
+
+
     public static final int PLIK_WYBRANY =99;
+
     ScheduledExecutorService regCzasowy;
+
     TextView tytulUtworu, minionyCzas;
+
     String trwanieUtworu;
+
     Boolean trybPowtorki = false;
+
     Handler obsluga;
 
     @Override
     protected void onCreate(Bundle zapisStanuInstancji) {
         super.onCreate(zapisStanuInstancji);
         setContentView(R.layout.odtwarzacz);
+
         otworzPrzycisk = findViewById(R.id.otworz);
         powtorkaPrzycisk = findViewById(R.id.powtorkaPrzycisk);
         pasekZakresu = findViewById(R.id.pasekZasiegu);
@@ -59,24 +73,29 @@ public class Odtwarzacz extends AppCompatActivity {
 
         pasekZakresu.setNotifyWhileDragging(true);
 
+
         grajPrzycisk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (odtwarzaczAudio != null) {
+
                     if (odtwarzaczAudio.isPlaying()) {
                         odtwarzaczAudio.pause();
                         grajPrzycisk.setText("ODTWÓRZ");
                     } else {
+
                         odtwarzaczAudio.start();
                         grajPrzycisk.setText("PAUZA");
                         String infoMs = String.valueOf(max);
                         Log.i("Max", infoMs);
+
 
                         new Timer().scheduleAtFixedRate(new TimerTask() {
                             @Override
                             public void run() {
                                 try {
                                     pasekPostepu.setProgress(odtwarzaczAudio.getCurrentPosition());
+
                                     if (pasekPostepu.getProgress() == max || odtwarzaczAudio.getCurrentPosition() == max) {
                                         if(trybPowtorki == true) {
                                             odtwarzaczAudio.seekTo(min);
@@ -97,9 +116,13 @@ public class Odtwarzacz extends AppCompatActivity {
         otworzPrzycisk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent otwarciePliku = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+
                 otwarciePliku.addCategory(Intent.CATEGORY_OPENABLE);
+
                 otwarciePliku.setType("audio/*");
+
                 startActivityForResult(otwarciePliku, PLIK_WYBRANY);
             }
         });
@@ -156,11 +179,13 @@ public class Odtwarzacz extends AppCompatActivity {
                 if (odtwarzaczAudio != null) {
                     if (trybPowtorki) {
                         trybPowtorki = false;
+
                         odtwarzaczAudio.setLooping(false);
                         powtorkaPrzycisk.setText("Powtórka wyłączona");
                         Toast.makeText(Odtwarzacz.this, "Tryb powtórki jest wyłączony", Toast.LENGTH_SHORT).show();
                     } else {
                         trybPowtorki = true;
+
                         odtwarzaczAudio.setLooping(true);
                         powtorkaPrzycisk.setText("Powtórka włączona");
                         Toast.makeText(Odtwarzacz.this, "Tryb powtórki jest włączony", Toast.LENGTH_SHORT).show();
@@ -172,45 +197,60 @@ public class Odtwarzacz extends AppCompatActivity {
         grajPrzycisk.setEnabled(false);
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         zwolnienieOdtwarzacza();
     }
 
+
     public void zwolnienieOdtwarzacza(){
+
         if (regCzasowy != null) {
             regCzasowy.shutdown();
         }
+
         if (odtwarzaczAudio != null) {
             odtwarzaczAudio.release();
             odtwarzaczAudio = null;
         }
+
         grajPrzycisk.setEnabled(false);
+
 
         pasekPostepu.setProgress(0);
         pasekPostepu.setMax(100);
+
 
         minionyCzas.setText("TYTUL");
         minionyCzas.setText("00:00 / 00:00");
     }
 
+
+
     @Override
     protected void onActivityResult(int zadanie, int wynik, @Nullable Intent dane) {
         super.onActivityResult(zadanie, wynik, dane);
+
         if (zadanie == PLIK_WYBRANY && wynik == RESULT_OK){
             if (dane != null){
                 Uri uri = dane.getData();
+
                 stworzOdtwAudio(uri);
             }
         }
     }
 
     public void stworzOdtwAudio(Uri uri){
+
         odtwarzaczAudio = new MediaPlayer();
         odtwarzaczAudio.setAudioAttributes(
+
                 new AudioAttributes.Builder()
+
                         .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+
                         .setUsage(AudioAttributes.USAGE_MEDIA)
                         .build()
         );
@@ -244,6 +284,7 @@ public class Odtwarzacz extends AppCompatActivity {
             tytulUtworu.setText(e.toString());
         }
     }
+
 
     @SuppressLint("Range")
     public String pobierzTytul(Uri uri){
