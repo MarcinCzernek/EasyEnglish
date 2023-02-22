@@ -1,6 +1,6 @@
 package com.mc.englishlearn.nagrywanie;
 
-import static com.mc.englishlearn.nagrywanie.SerwisNagrywarki.ZATRZYMANIE_AKCJI;
+import static com.mc.englishlearn.nagrywanie.UslugaNagrywarki.ZATRZYMANIE_AKCJI;
 
 import android.Manifest;
 import android.app.Activity;
@@ -23,11 +23,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.mc.englishlearn.R;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 public class Nagrywarka extends AppCompatActivity {
 
@@ -122,10 +118,10 @@ public void onCreate (Bundle zapisStanuInstancji){
     if (kodWynik == Activity.RESULT_OK && kodWymagany == 2000) {
       if (dane != null) {
 
-        Intent intencja = new Intent(this, SerwisNagrywarki.class);
+        Intent intencja = new Intent(this, UslugaNagrywarki.class);
 
-        intencja.putExtra(SerwisNagrywarki.DODATKOWY_KOD, kodWynik);
-        intencja.putExtra(SerwisNagrywarki.DODATKOWE_DANE, dane);
+        intencja.putExtra(UslugaNagrywarki.DODATKOWY_KOD, kodWynik);
+        intencja.putExtra(UslugaNagrywarki.DODATKOWE_DANE, dane);
 
         ContextCompat.startForegroundService(this, intencja);
 

@@ -51,7 +51,7 @@
         </activity>
 
         <service
-            android:name=".nagrywanie.SerwisNagrywarki"
+            android:name=".nagrywanie.UslugaNagrywarki"
             android:enabled="true"
             android:foregroundServiceType="mediaProjection"
             android:exported="true"/>
